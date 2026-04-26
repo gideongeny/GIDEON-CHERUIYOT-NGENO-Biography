@@ -74,5 +74,31 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// Typewriter effect for the Letter to 2126
+const typewriterElement = document.getElementById('future-message');
+if (typewriterElement) {
+    const text = typewriterElement.textContent.trim();
+    typewriterElement.textContent = '';
+    
+    let i = 0;
+    const typeWriter = () => {
+        if (i < text.length) {
+            typewriterElement.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 30);
+        }
+    };
+
+    // Trigger typewriter when section is in view
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            typeWriter();
+            observer.unobserve(entries[0].target);
+        }
+    }, { threshold: 0.5 });
+
+    observer.observe(document.getElementById('future-letter'));
+}
+
 // Log for confirmation
 console.log("Gideon's Digital Legacy: Site logic initialized.");
